@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:iconsax/iconsax.dart';
+import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:portfolio/sidemenu.dart';
 import 'package:portfolio/theme.dart';
 import 'package:portfolio/utilities/custom_button.dart';
+import 'package:portfolio/utilities/custom_textfield.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'images.dart';
 
@@ -16,6 +19,9 @@ class LandingPage extends StatefulWidget {
 class _LandingPageState extends State<LandingPage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   bool showSecondText = false;
+  TextEditingController mobileController = TextEditingController();
+  PhoneNumber number = PhoneNumber(isoCode: "PK", dialCode: "");
+  PhoneNumber phoneNumber = PhoneNumber();
 
   Widget platformButton(String image, Color color, String text, double width,
       Color textColor, VoidCallback onTap) {
@@ -123,39 +129,43 @@ class _LandingPageState extends State<LandingPage> {
                 // Blur radius
                 offset: const Offset(-1, 3),
                 blurStyle: BlurStyle
-                    .normal // Position the shadow above the container
+                    .normal
             ),
           ],
         ),
         child: Padding(
           padding: const EdgeInsets.all(15),
-          child: Expanded(
-            child: Column(
-              children: [
-                SizedBox(
-                  height: 130,
-                  width: 130,
-                  child: Image.asset(image,fit: BoxFit.contain,),
-                ),
-                const SizedBox(height: 30,),
-                Text(
-                  title,
-                  style: GoogleFonts.onest(
-                      fontSize: 20,
-                      fontWeight: FontWeight.w700,
-                      color: darkColor),
-                ),
-                const Spacer(),
-                Text(
-                  text,
-                  style: GoogleFonts.onest(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w400,
-                      color: darkColor),
-                ),
+          child: Column(
+            children: [
+              SizedBox(
+                height: 130,
+                width: 130,
+                child: Image.asset(image,fit: BoxFit.contain,),
+              ),
+              const SizedBox(height: 30,),
+              Text(
+                title,
+                style: GoogleFonts.onest(
+                    fontSize: 20,
+                    fontWeight: FontWeight.w700,
+                    color: darkColor),
+              ),
+              const Spacer(),
+              Row(
+                children: [
+                  Expanded(
+                    child: Text(
+                      text,
+                      style: GoogleFonts.onest(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w400,
+                          color: darkColor),
+                    ),
+                  ),
+                ],
+              ),
 
-              ],
-            ),
+            ],
           ),
         ),
       )
@@ -180,7 +190,7 @@ class _LandingPageState extends State<LandingPage> {
                   borderRadius: BorderRadius.circular(16),
                   child: Image.asset(image,fit: BoxFit.cover,)),
             ),
-            Spacer(),
+            const Spacer(),
             Center(
               child: Text(
                 title,
@@ -193,6 +203,43 @@ class _LandingPageState extends State<LandingPage> {
           ],
         ),
       )
+    );
+  }
+
+  Widget skillContainer(String image, String title) {
+    return  SizedBox(
+      height: 160,
+      width: MediaQuery.of(context).size.width / 3.1,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Container(
+            height: 120,
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(16),
+                color: Colors.grey.shade700
+            ),
+            child: Center(
+              child: Container(
+                height: 50,
+                width: 50,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8),
+                    color: backgroundColor
+                ),
+                child: ClipRRect(
+                    borderRadius: BorderRadius.circular(8),
+                    child: Image.asset(image,fit: BoxFit.contain,)),
+              ),
+            ),
+          ),
+          Text(title,style: GoogleFonts.onest(
+              color: backgroundColor,
+              fontSize: 16,
+              fontWeight: FontWeight.w700
+          ),),
+        ],
+      ),
     );
   }
 
@@ -658,7 +705,7 @@ class _LandingPageState extends State<LandingPage> {
                   child: Column(
                     children: [
                       Text(
-                        "Skills",
+                        "Services",
                         style: GoogleFonts.onest(
                             fontSize: 18,
                             fontWeight: FontWeight.w700,
@@ -666,7 +713,7 @@ class _LandingPageState extends State<LandingPage> {
                       ),
                       SizedBox(height: mainP),
                       Text(
-                        "My Quality Skills",
+                        "My Quality Services",
                         style: GoogleFonts.onest(
                             fontSize: 24,
                             fontWeight: FontWeight.w700,
@@ -750,7 +797,7 @@ class _LandingPageState extends State<LandingPage> {
                           "I perform comprehensive testing to ensure functionality, usability and performance,"
                               " guaranteeing a smooth user interface",
                               (){}),
-                      SizedBox(height: 30,),
+                      const SizedBox(height: 30,),
 
                     ],
                   ),
@@ -760,7 +807,7 @@ class _LandingPageState extends State<LandingPage> {
                 padding: EdgeInsets.symmetric(horizontal: mainP),
                 child: Column(
                   children: [
-                    SizedBox(height: 30),
+                    const SizedBox(height: 30),
                     Center(
                       child: Text(
                         "Portfolio",
@@ -770,7 +817,7 @@ class _LandingPageState extends State<LandingPage> {
                             color: darkColor),
                       ),
                     ),
-                    SizedBox(height: 30),
+                    const SizedBox(height: 30),
                     projectContainer(Images.mataverse, "Mataverse App", (){}),
                     SizedBox(height: mainP),
                     Text(
@@ -780,7 +827,7 @@ class _LandingPageState extends State<LandingPage> {
                      fontWeight: FontWeight.w400,
                      fontSize: 16
                    ),),
-                    SizedBox(height: 60),
+                    const SizedBox(height: 60),
                     projectContainer(Images.sun, "Sun App", (){}),
                     SizedBox(height: mainP),
                     Text(
@@ -791,7 +838,7 @@ class _LandingPageState extends State<LandingPage> {
                           fontWeight: FontWeight.w400,
                           fontSize: 16
                       ),),
-                    SizedBox(height: 60),
+                    const SizedBox(height: 60),
                     projectContainer(Images.chat, "Chatting App", (){}),
                     SizedBox(height: mainP),
                     Text(
@@ -801,7 +848,7 @@ class _LandingPageState extends State<LandingPage> {
                           fontWeight: FontWeight.w400,
                           fontSize: 16
                       ),),
-                    SizedBox(height: 60),
+                    const SizedBox(height: 60),
                   ],
                 ),
               ),
@@ -810,7 +857,7 @@ class _LandingPageState extends State<LandingPage> {
                 color: Colors.black.withOpacity(0.9),
                 child: Column(
                   children: [
-                    SizedBox(height: 30),
+                    const SizedBox(height: 30),
                     Text(
                       "My Skills",
                       style: GoogleFonts.onest(
@@ -818,21 +865,255 @@ class _LandingPageState extends State<LandingPage> {
                           fontWeight: FontWeight.w700,
                           color: backgroundColor),
                     ),
-                    SizedBox(height: 30),
-                    // Wrap(
-                    //   children: [
-                    //     Container(
-                    //       height: 200,
-                    //       width: 150,
-                    //       child: Container(
-                    //
-                    //       ),
-                    //     )
-                    //   ],
-                    // )
+                    const SizedBox(height: 30),
+                    Wrap(
+                      runSpacing: 20,
+                      spacing: 20,
+                      children: [
+                        skillContainer(Images.flutter, "Flutter"),
+                        skillContainer(Images.dart, "Dart"),
+                        skillContainer(Images.firebase, "Firebase"),
+                        skillContainer(Images.sql, "MySQL"),
+                        skillContainer(Images.mongo, "MongoDB"),
+                        skillContainer(Images.java, "JavaScript"),
+                        skillContainer(Images.node, "Node.js"),
+                        skillContainer(Images.api, "Rest APIs"),
+                        skillContainer(Images.git, "Git"),
+                        skillContainer(Images.github, "GitHub"),
+                      ],
+                    ),
+                    const SizedBox(height: 30),
                   ],
                 ),
               ),
+              Container(
+                width: width,
+                color: const Color(0xffe8edfe),
+                child: Column(
+                  children: [
+                    const SizedBox(height: 35,),
+                    Text(
+                      "Education",
+                      style: GoogleFonts.onest(
+                          fontSize: 24,
+                          fontWeight: FontWeight.w700,
+                          color: darkColor),
+                    ),
+                    const SizedBox(height: 35,),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 15),
+                      child: Container(
+                        width: width,
+                        decoration: BoxDecoration(
+                          color: backgroundColor,
+                          // border: Border.all(color: greyLightColor.withOpacity(1)),
+                          borderRadius: BorderRadius.circular(mainP),
+                          boxShadow: [
+                            BoxShadow(
+                                color: Colors.black.withOpacity(0.03),
+                                // Shadow color
+                                spreadRadius: 2,
+                                // Spread radius
+                                blurRadius: 6,
+                                // Blur radius
+                                offset: const Offset(-1, 3),
+                                blurStyle: BlurStyle
+                                    .normal // Position the shadow above the container
+                            ),
+                          ],
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(16),
+                          child: Row(
+                            children: [
+                              Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(100),
+                                  color: primaryColor.withOpacity(0.1)
+                                ),
+                                height: 50,
+                                width: 50,
+                                child: Center(child: Image.asset(Images.education,height: 30,width: 30,color: primaryColor,)),
+                              ),
+                              SizedBox(width: mainP,),
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text('2020-2024',style: GoogleFonts.onest(
+                                      fontWeight: FontWeight.w600,color: greyColor,fontSize: 14
+                                    ),),
+                                    const SizedBox(height: 5,),
+                                    Text('Bachelor\'s of Software Engineering',style: GoogleFonts.onest(
+                                        fontWeight: FontWeight.w700,color: darkColor,fontSize: 20
+                                    ),),
+                                    const SizedBox(height: 5,),
+                                    Text('Government College University Faisalabad (GCUF)',style: GoogleFonts.onest(
+                                        fontWeight: FontWeight.w400,color: darkColor,fontSize: 16
+                                    ),),
+                                  ],
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 60,),
+
+                  ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 12),
+                child: Column(
+                  children: [
+                    const SizedBox(height: 40,),
+                    Center(
+                      child: Text(
+                        "Let's work together",
+                        style: GoogleFonts.onest(
+                            fontSize: 24,
+                            fontWeight: FontWeight.w700,
+                            color: darkColor),
+                      ),
+                    ),
+                    const SizedBox(height: 40,),
+                    MyCustomTextField(
+                      // controller: nameController,
+                      textInputType: TextInputType.text,
+                      hintText: 'eg: john',
+                      prefixIcon: Icons.person_2_outlined,
+                      borderColor: lightGrey,
+                    ),
+                    SizedBox(height: mainP,),
+                    MyCustomTextField(
+                      // controller: nameController,
+                      textInputType: TextInputType.text,
+                      hintText: 'eg: doe',
+                      prefixIcon: Icons.person_2_outlined,
+                      borderColor: lightGrey,
+                    ),
+                    SizedBox(height: mainP,),
+                    MyCustomTextField(
+                      // controller: nameController,
+                      textInputType: TextInputType.text,
+                      hintText: 'eg: john@gmail.com',
+                      prefixIcon: Icons.person_2_outlined,
+                      borderColor: lightGrey,
+                    ),
+                    SizedBox(height: mainP,),
+                    Container(
+                      width: width,
+                      height: 53,
+                      decoration: BoxDecoration(color: backgroundColor, border: Border.all(color: lightGrey), borderRadius: BorderRadius.circular(12)),
+                      child: Padding(
+                        padding: EdgeInsets.only(left: p),
+                        child: ClipRRect(
+                          borderRadius: const BorderRadius.only(topRight: Radius.circular(12), bottomRight: Radius.circular(12)),
+                          child: InternationalPhoneNumberInput(
+                            onInputChanged: (PhoneNumber number) {
+                              setState(() {
+                                phoneNumber = number;
+                              });
+                            },
+                            onInputValidated: (bool value) {},
+                            selectorConfig: const SelectorConfig(
+                              selectorType: PhoneInputSelectorType.BOTTOM_SHEET,
+                              useBottomSheetSafeArea: true,
+                            ),
+                            spaceBetweenSelectorAndTextField: 0,
+                            ignoreBlank: false,
+                            autoValidateMode: AutovalidateMode.disabled,
+                            selectorTextStyle: const TextStyle(color: Colors.black),
+                            initialValue: number,
+                            textFieldController: mobileController,
+                            formatInput: true,
+                            keyboardType: const TextInputType.numberWithOptions(signed: true, decimal: true),
+                            inputBorder: InputBorder.none,
+                            inputDecoration: const InputDecoration(focusedBorder: OutlineInputBorder(borderSide: BorderSide.none),disabledBorder: UnderlineInputBorder(),enabledBorder: OutlineInputBorder(borderSide: BorderSide.none), hintText: "Phone Number", border: InputBorder.none),
+                            onSaved: (PhoneNumber number) {},
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: mainP,),
+                    MyCustomTextField(
+                      // controller: nameController,
+                      textInputType: TextInputType.text,
+                      hintText: 'Write here something...',
+                      prefixIcon: Icons.person_2_outlined,
+                      maxLines: 8,
+                      borderColor: lightGrey,
+                    ),
+                    const SizedBox(height: 40,),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        CustomButton(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                          text: "Send Message",
+                          width: width / 2,
+                          height: 50,
+                          onTap: () {},
+                          textColor: backgroundColor,
+                          backgroundColor: primaryColor,
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 40,),
+                  ],
+                ),
+              ),
+              Container(
+                width: width,
+                color: Colors.black.withOpacity(0.9),
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 14,vertical: 20),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Contact Information",
+                        style: GoogleFonts.onest(
+                            fontSize: 24,
+                            fontWeight: FontWeight.w700,
+                            color: backgroundColor),
+                      ),
+                      SizedBox(height: 30,),
+                      Row(
+                        children: [
+                          Icon(Icons.call,color: Colors.grey.shade700),
+                          SizedBox(width: mainP,),
+                          Text(
+                            "+923197026592",
+                            style: GoogleFonts.onest(
+                                fontSize: 18,
+                                fontWeight: FontWeight.w700,
+                                color: Colors.grey.shade700),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: mainP,),
+                      Row(
+                        children: [
+                          Icon(Icons.email,color: Colors.grey.shade700),
+                          SizedBox(width: mainP,),
+                          Text(
+                            "devusama818@gmail.com",
+                            style: GoogleFonts.onest(
+                                fontSize: 18,
+                                fontWeight: FontWeight.w700,
+                                color: Colors.grey.shade700),
+                          ),
+                        ],
+                      ),
+
+                    ],
+                  ),
+                ),
+              )
             ],
           ),
         ),
@@ -857,7 +1138,7 @@ class TypeWriterText extends StatefulWidget {
     required this.onFinished,
     required this.primaryStyle,
     required this.secondaryStyle,
-    this.changeAfterLetter = 10, // Default to change after the 10th letter
+    this.changeAfterLetter = 10,
   });
 
   @override

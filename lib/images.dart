@@ -9,7 +9,7 @@ class Images {
   static const firebase = "assets/images/firebase.png";
   static const apis = "assets/images/apis.jfif";
   static const mobile = "assets/images/mobilea.jpg";
-  static const node = "assets/images/node.jfif";
+  static const node = "assets/images/node.png";
   static const sql = "assets/images/sql.png";
   static const testing = "assets/images/testing.png";
   static const development = "assets/images/development.png";
@@ -18,4 +18,15 @@ class Images {
   static const mataverse = "assets/images/mataverse.png";
   static const sun = "assets/images/sun.png";
   static const chat = "assets/images/chat.png";
+  static const flutter = "assets/images/flutter.png";
+  static const dart = "assets/images/dart.png";
+  static const cPlus = "assets/images/c.png";
+  static const api = "assets/images/api.png";
+  static const mongo = "assets/images/mongo.png";
+  static const java = "assets/images/java.png";
+  static const git = "assets/images/git.jfif";
+  static const education = "assets/images/education.png";
+  static const services = "assets/images/services.png";
+  static const portfolio = "assets/images/portfolio.png";
+  static const skills = "assets/images/skills.png";
 }

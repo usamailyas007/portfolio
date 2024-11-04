@@ -127,102 +127,88 @@ class _SideMenuState extends State<SideMenu> {
                 ),
               ),
             ),
-            Expanded(
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                      ListTile(
-                        leading: Icon(
-                          Iconsax.home,
-                          color: primaryColor,
-                          size: 25,
-                        ),
-                        title: Text(
-                          "Home",
-                          style: GoogleFonts.onest(
-                            color: primaryColor,
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
-                        onTap: () {},
+            SingleChildScrollView(
+              child: Column(
+                children: [
+                    ListTile(
+                      leading: Icon(
+                        Iconsax.home,
+                        color: primaryColor,
+                        size: 25,
                       ),
-                      ListTile(
-                        leading: Icon(
-                          Iconsax.profile_circle,
+                      title: Text(
+                        "Home",
+                        style: GoogleFonts.onest(
                           color: primaryColor,
-                          size: 25,
+                          fontWeight: FontWeight.w700,
                         ),
-                        title: Text(
-                          "About Me",
-                          style: GoogleFonts.onest(
-                            color: primaryColor,
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
-                        onTap: () {},
                       ),
-                      ListTile(
-                        leading: Icon(
-                          Iconsax.home,
+                      onTap: () {},
+                    ),
+                    ListTile(
+                      leading: Icon(
+                        Iconsax.profile_circle,
+                        color: primaryColor,
+                        size: 25,
+                      ),
+                      title: Text(
+                        "About Me",
+                        style: GoogleFonts.onest(
                           color: primaryColor,
-                          size: 25,
+                          fontWeight: FontWeight.w700,
                         ),
-                        title: Text(
-                          "Services",
-                          style: GoogleFonts.onest(
-                            color: primaryColor,
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
-                        onTap: () {},
                       ),
-                      ListTile(
-                        leading: Icon(
-                          Iconsax.home,
+                      onTap: () {},
+                    ),
+                    ListTile(
+                      leading: Image.asset(Images.services,height: 25,width: 25,color: primaryColor,),
+                      title: Text(
+                        "Services",
+                        style: GoogleFonts.onest(
                           color: primaryColor,
-                          size: 25,
+                          fontWeight: FontWeight.w700,
                         ),
-                        title: Text(
-                          "Portfolio",
-                          style: GoogleFonts.onest(
-                            color: primaryColor,
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
-                        onTap: () {},
                       ),
-                      ListTile(
-                        leading: Icon(
-                          Iconsax.home,
+                      onTap: () {},
+                    ),
+                    ListTile(
+                      leading: Image.asset(Images.portfolio,height: 25,width: 25,color: primaryColor,),
+                      title: Text(
+                        "Portfolio",
+                        style: GoogleFonts.onest(
                           color: primaryColor,
-                          size: 25,
+                          fontWeight: FontWeight.w700,
                         ),
-                        title: Text(
-                          "Skills",
-                          style: GoogleFonts.onest(
-                            color: primaryColor,
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
-                        onTap: () {},
                       ),
-                      ListTile(
-                        leading: Icon(
-                          Iconsax.call,
+                      onTap: () {},
+                    ),
+                    ListTile(
+                      leading: Image.asset(Images.skills,height: 25,width: 25,color: primaryColor,),
+                      title: Text(
+                        "Skills",
+                        style: GoogleFonts.onest(
                           color: primaryColor,
-                          size: 25,
+                          fontWeight: FontWeight.w700,
                         ),
-                        title: Text(
-                          "Contact",
-                          style: GoogleFonts.onest(
-                            color: primaryColor,
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
-                        onTap: () {},
                       ),
-                  ],
-                ),
+                      onTap: () {},
+                    ),
+                    ListTile(
+                      leading: Icon(
+                        Iconsax.call,
+                        color: primaryColor,
+                        size: 25,
+                      ),
+                      title: Text(
+                        "Contact",
+                        style: GoogleFonts.onest(
+                          color: primaryColor,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                      onTap: () {},
+                    ),
+                ],
               ),
             ),
           ],
