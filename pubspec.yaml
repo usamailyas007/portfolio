@@ -43,6 +43,9 @@ dependencies:
   typewritertext: ^3.0.9
   animated_text_kit: ^4.2.2
   intl_phone_number_input: ^0.7.4
+  url_launcher: ^6.0.17
+  path_provider: ^2.0.14
+
 
 
 

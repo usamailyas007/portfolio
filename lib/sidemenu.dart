@@ -8,7 +8,22 @@ import 'package:responsive_framework/responsive_framework.dart';
 import 'images.dart';
 
 class SideMenu extends StatefulWidget {
-  const SideMenu({super.key});
+  final Function(GlobalKey) onMenuTap;
+  final GlobalKey aboutMeKey;
+  final GlobalKey homeKey;
+  final GlobalKey servicesKey;
+  final GlobalKey portfolioKey;
+  final GlobalKey skillKey;
+  final GlobalKey contactKey;
+  const SideMenu({super.key,
+    required this.onMenuTap,
+    required this.aboutMeKey,
+    required this.homeKey,
+    required this.servicesKey,
+    required this.portfolioKey,
+    required this.skillKey,
+    required this.contactKey,
+  });
 
   @override
   State<SideMenu> createState() => _SideMenuState();
@@ -143,7 +158,10 @@ class _SideMenuState extends State<SideMenu> {
                           fontWeight: FontWeight.w700,
                         ),
                       ),
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.pop(context);
+                        widget.onMenuTap(widget.homeKey);
+                      },
                     ),
                     ListTile(
                       leading: Icon(
@@ -158,7 +176,11 @@ class _SideMenuState extends State<SideMenu> {
                           fontWeight: FontWeight.w700,
                         ),
                       ),
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.pop(context);
+                        widget.onMenuTap(widget.aboutMeKey);
+
+                      },
                     ),
                     ListTile(
                       leading: Image.asset(Images.services,height: 25,width: 25,color: primaryColor,),
@@ -169,7 +191,10 @@ class _SideMenuState extends State<SideMenu> {
                           fontWeight: FontWeight.w700,
                         ),
                       ),
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.pop(context);
+                        widget.onMenuTap(widget.servicesKey);
+                      },
                     ),
                     ListTile(
                       leading: Image.asset(Images.portfolio,height: 25,width: 25,color: primaryColor,),
@@ -180,7 +205,10 @@ class _SideMenuState extends State<SideMenu> {
                           fontWeight: FontWeight.w700,
                         ),
                       ),
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.pop(context);
+                        widget.onMenuTap(widget.portfolioKey);
+                      },
                     ),
                     ListTile(
                       leading: Image.asset(Images.skills,height: 25,width: 25,color: primaryColor,),
@@ -191,7 +219,10 @@ class _SideMenuState extends State<SideMenu> {
                           fontWeight: FontWeight.w700,
                         ),
                       ),
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.pop(context);
+                        widget.onMenuTap(widget.skillKey);
+                      },
                     ),
                     ListTile(
                       leading: Icon(
@@ -206,7 +237,10 @@ class _SideMenuState extends State<SideMenu> {
                           fontWeight: FontWeight.w700,
                         ),
                       ),
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.pop(context);
+                        widget.onMenuTap(widget.contactKey);
+                      },
                     ),
                 ],
               ),
