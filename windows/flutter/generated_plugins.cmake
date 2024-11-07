@@ -3,7 +3,6 @@
 #
 
 list(APPEND FLUTTER_PLUGIN_LIST
-  typing_text_animation
   url_launcher_windows
 )
 

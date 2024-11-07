@@ -3,7 +3,7 @@
 #
 
 list(APPEND FLUTTER_PLUGIN_LIST
-  typing_text_animation
+  open_file_linux
   url_launcher_linux
 )
 

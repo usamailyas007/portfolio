@@ -29,4 +29,5 @@ class Images {
   static const services = "assets/images/services.png";
   static const portfolio = "assets/images/portfolio.png";
   static const skills = "assets/images/skills.png";
+  static const logo = "assets/images/logo.png";
 }
