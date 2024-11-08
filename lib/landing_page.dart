@@ -123,6 +123,9 @@ class _LandingPageState extends State<LandingPage> {
   }
 
   Widget serviceContainer(String image, String title, String text,VoidCallback onTap) {
+    bool isTablet = ResponsiveBreakpoints.of(context).largerThan(TABLET);
+    double width = MediaQuery.of(context).size.width;
+
     return GestureDetector(
       onTap: onTap,
       child: Container(
@@ -134,36 +137,61 @@ class _LandingPageState extends State<LandingPage> {
         ),
         child: Padding(
           padding: EdgeInsets.all(mainP),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
+          child: ResponsiveRowColumn(
+            rowMainAxisAlignment:MainAxisAlignment.spaceBetween,
+            layout: ResponsiveRowColumnType.ROW,
+            // columnCrossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
-                height: 120,
-                width: 80,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(mainP),
-                ),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(p),
-                    child: Image.asset(image,fit: BoxFit.cover,)),
+              ResponsiveRowColumnItem(
+                rowOrder: isTablet ? 2 : 1,
+                  child: Padding(
+                    padding: EdgeInsets.only(right: isTablet ? 20 : 0),
+                    child: Container(
+                              height: isTablet ? 170 : 120,
+                                width: isTablet ? width / 4.8 : 80,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(isTablet ? 20 : mainP),
+                                ),
+                                child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(p),
+                                    child: Image.asset(image,fit: BoxFit.cover,)),
+                              ),
+                  )
               ),
-              SizedBox(width: p,),
-              Expanded(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.start,
+              // ResponsiveRowColumnItem(
+              //   child: SizedBox(width: 20,),),
+              ResponsiveRowColumnItem(
+                  rowOrder: isTablet ? 1 : 2,
+                  child: Expanded(
+                child: ResponsiveRowColumn(
+                  layout: isTablet ? ResponsiveRowColumnType.ROW : ResponsiveRowColumnType.COLUMN,
+                  rowMainAxisAlignment: MainAxisAlignment.spaceBetween ,
+                  columnMainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  columnCrossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(title,style: GoogleFonts.onest(
-                        fontSize: 18,fontWeight: FontWeight.w700,color: backgroundColor
-                    ),),
-                    SizedBox(height: p,),
-                    Text(
-                      text,style: GoogleFonts.onest(
-                        fontSize: 14,fontWeight: FontWeight.w600,color: greyColor
-                    ),),
+                    ResponsiveRowColumnItem(
+                        child: SizedBox(
+                          width: isTablet ? width / 4 : null,
+                          child: Center(
+                        child: Text(title,style: GoogleFonts.onest(
+                            fontSize: 18,fontWeight: FontWeight.w700,color: backgroundColor
+                        ),),
+                                              ),
+                                            )),
+                    ResponsiveRowColumnItem(child: SizedBox(height: isTablet ? 0 : p,width: 20),),
+                    ResponsiveRowColumnItem(
+                      // rowOrder: isTablet ? 1 : 2,
+                      child: SizedBox(
+                        width: isTablet ? width / 3 : null,
+                        child: Text(
+                        text,style: GoogleFonts.onest(
+                          fontSize: 14,fontWeight: FontWeight.w600,color: greyColor
+                                            ),),
+                      ),)
                   ],
                 ),
-              )
+              ))
+
             ],
           ),
         ),
@@ -171,107 +199,130 @@ class _LandingPageState extends State<LandingPage> {
     );
   }
 
-  Widget workspaceContainer(String image, String title, String text,VoidCallback onTap) {
+  Widget workspaceContainer(String image, String title, String text,VoidCallback onTap,double width) {
+    bool isTablet = ResponsiveBreakpoints.of(context).largerThan(TABLET);
+
     return GestureDetector(
       onTap: onTap,
-      child: Container(
-        height: 280,
-        width: MediaQuery.of(context).size.width,
-        decoration: BoxDecoration(
-          color: backgroundColor,
-          // border: Border.all(color: greyLightColor.withOpacity(1)),
-          borderRadius: BorderRadius.circular(mainP),
-          boxShadow: [
-            BoxShadow(
-                color: Colors.black.withOpacity(0.03),
-                // Shadow color
-                spreadRadius: 2,
-                // Spread radius
-                blurRadius: 6,
-                // Blur radius
-                offset: const Offset(-1, 3),
-                blurStyle: BlurStyle
-                    .normal
+      child: Padding(
+        padding: EdgeInsets.only(bottom: isTablet ? 0 : 20),
+        child: Container(
+          height: isTablet ? 320 : 280,
+          width: width,
+          decoration: BoxDecoration(
+            color: backgroundColor,
+            // border: Border.all(color: greyLightColor.withOpacity(1)),
+            borderRadius: BorderRadius.circular(mainP),
+            boxShadow: [
+              BoxShadow(
+                  color: Colors.black.withOpacity(0.03),
+                  // Shadow color
+                  spreadRadius: 2,
+                  // Spread radius
+                  blurRadius: 6,
+                  // Blur radius
+                  offset: const Offset(-1, 3),
+                  blurStyle: BlurStyle
+                      .normal
+              ),
+            ],
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(15),
+            child: Column(
+              children: [
+                SizedBox(
+                  height: 130,
+                  width: 130,
+                  child: Image.asset(image,fit: BoxFit.contain,),
+                ),
+                const SizedBox(height: 30,),
+                Text(
+                  title,
+                  textAlign: isTablet ? TextAlign.center : TextAlign.start,
+                  style: GoogleFonts.onest(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w700,
+                      color: darkColor),
+                ),
+                const Spacer(),
+                Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        text,
+                        style: GoogleFonts.onest(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w400,
+                            color: darkColor),
+                      ),
+                    ),
+                  ],
+                ),
+
+              ],
             ),
-          ],
+          ),
         ),
-        child: Padding(
-          padding: const EdgeInsets.all(15),
+      )
+    );
+  }
+
+  Widget projectContainer(String image, String title, VoidCallback onTap,String detail) {
+    bool isTablet = ResponsiveBreakpoints.of(context).largerThan(TABLET);
+    double width = MediaQuery.of(context).size.width;
+
+    return GestureDetector(
+      onTap: onTap,
+      child: Padding(
+        padding: const EdgeInsets.only(bottom: 60),
+        child: SizedBox(
+          // height: 290,
+          width: isTablet ? width / 3.5 : width,
           child: Column(
             children: [
-              SizedBox(
-                height: 130,
-                width: 130,
-                child: Image.asset(image,fit: BoxFit.contain,),
+              Container(
+                height: 250,
+                width: MediaQuery.of(context).size.width,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(16)
+                ),
+                child: ClipRRect(
+                    borderRadius: BorderRadius.circular(16),
+                    child: Image.asset(image,fit: BoxFit.cover,)),
               ),
-              const SizedBox(height: 30,),
+              SizedBox(height: mainP),
+              Center(
+                child: Text(
+                  title,
+                  style: GoogleFonts.onest(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w700,
+                      color: darkColor),
+                ),
+              ),
+              SizedBox(height: mainP),
               Text(
-                title,
+                  detail,
                 style: GoogleFonts.onest(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w700,
-                    color: darkColor),
-              ),
-              const Spacer(),
-              Row(
-                children: [
-                  Expanded(
-                    child: Text(
-                      text,
-                      style: GoogleFonts.onest(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w400,
-                          color: darkColor),
-                    ),
-                  ),
-                ],
-              ),
-
+                    color: greyColor,
+                    fontWeight: FontWeight.w400,
+                    fontSize: 16
+                ),),
             ],
           ),
-        ),
-      )
-    );
-  }
-
-  Widget projectContainer(String image, String title, VoidCallback onTap) {
-    return GestureDetector(
-      onTap: onTap,
-      child: SizedBox(
-        height: 290,
-        width: MediaQuery.of(context).size.width,
-        child: Column(
-          children: [
-            Container(
-              height: 250,
-              width: MediaQuery.of(context).size.width,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(16)
-              ),
-              child: ClipRRect(
-                  borderRadius: BorderRadius.circular(16),
-                  child: Image.asset(image,fit: BoxFit.cover,)),
-            ),
-            const Spacer(),
-            Center(
-              child: Text(
-                title,
-                style: GoogleFonts.onest(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w700,
-                    color: darkColor),
-              ),
-            ),
-          ],
         ),
       )
     );
   }
 
   Widget skillContainer(String image, String title) {
+    bool isTablet = ResponsiveBreakpoints.of(context).largerThan(TABLET);
+    double width = MediaQuery.of(context).size.width;
+
     return  SizedBox(
-      height: 160,
-      width: MediaQuery.of(context).size.width / 3.1,
+      height: 170,
+      width: isTablet ? 140 : MediaQuery.of(context).size.width / 3.1,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -681,7 +732,7 @@ class _LandingPageState extends State<LandingPage> {
                          ResponsiveRowColumnItem(
                              child: Container(
                                height: isTablet ? 160 : 180,
-                               width: width / 2,
+                               width: isTablet ? width / 2 : width,
                                decoration: BoxDecoration(
                                  color: backgroundColor,
                                  // border: Border.all(color: greyLightColor.withOpacity(1)),
@@ -837,7 +888,7 @@ class _LandingPageState extends State<LandingPage> {
                         ),
                       ),
                       ResponsiveRowColumnItem(
-                        child: isTablet ? Spacer() : SizedBox(),
+                        child: isTablet ? const Spacer() : const SizedBox(),
                       ),
                       ResponsiveRowColumnItem(
                         child: SizedBox(
@@ -946,15 +997,15 @@ class _LandingPageState extends State<LandingPage> {
               Container(
                 key: servicesKey,
                 width: width,
-                color: Colors.black.withOpacity(0.9),
+                color: Colors.black,
                 child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: mainP, vertical: 20),
+                  padding: EdgeInsets.symmetric(horizontal: isTablet ? 80 :mainP, vertical: 25),
                   child: Column(
                     children: [
                       Text(
                         "Services",
                         style: GoogleFonts.onest(
-                            fontSize: 18,
+                            fontSize: isTablet ? 22 : 18,
                             fontWeight: FontWeight.w700,
                             color: greyColor),
                       ),
@@ -962,11 +1013,11 @@ class _LandingPageState extends State<LandingPage> {
                       Text(
                         "My Quality Services",
                         style: GoogleFonts.onest(
-                            fontSize: 24,
+                            fontSize: isTablet ? 30 : 24,
                             fontWeight: FontWeight.w700,
                             color: backgroundColor),
                       ),
-                      const SizedBox(height: 35),
+                      SizedBox(height: isTablet ? 45 :35),
                       MouseRegion(
                         onEnter: (_) => _onHover(true),
                         onExit: (_) => _onHover(false),
@@ -1022,10 +1073,12 @@ class _LandingPageState extends State<LandingPage> {
               ),
               Container(
                 width: width,
+                height: isTablet ? 600 : null,
                 color: const Color(0xffe8edfe),
                 child: Padding(
                   padding: EdgeInsets.symmetric(horizontal: mainP, vertical: 20),
                   child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
                         "My Work Process",
@@ -1034,22 +1087,26 @@ class _LandingPageState extends State<LandingPage> {
                             fontWeight: FontWeight.w700,
                             color: darkColor),
                       ),
-                      const SizedBox(height: 25,),
-                      workspaceContainer(Images.research, "Research and Design",
-                          "I conduct thorough research and design intuitive user experiences, focusing an accessibility and responsiveness",
-                              (){}),
-                      SizedBox(height: mainP,),
-                      workspaceContainer(Images.development, "Development",
-                          "I develop high-quality,responsive and interface mobile and web applications"
-                              "using Flutter, ensuring optimal performance",
-                              (){}),
-                      SizedBox(height: mainP,),
-                      workspaceContainer(Images.testing, "Testing",
-                          "I perform comprehensive testing to ensure functionality, usability and performance,"
-                              " guaranteeing a smooth user interface",
-                              (){}),
-                      const SizedBox(height: 30,),
+                      SizedBox(height: isTablet ? 40 : 25,),
+                      Wrap(
+                        children: [
+                          workspaceContainer(Images.research, "Research and Design",
+                              "I conduct thorough research and design intuitive user experiences, focusing an accessibility and responsiveness",
+                                  (){},isTablet ? 250 : width),
+                          SizedBox(height: isTablet ? 0 : mainP,width: isTablet ? mainP : 0,),
+                          workspaceContainer(Images.development, "Development",
+                              "I develop high-quality,responsive and interface mobile and web applications"
+                                  "using Flutter, ensuring optimal performance",
+                                  (){},isTablet ? 250 : width),
+                          SizedBox(height: isTablet ? 0 : mainP,width: isTablet ? mainP : 0,),
+                          workspaceContainer(Images.testing, "Testing",
+                              "I perform comprehensive testing to ensure functionality, usability and performance,"
+                                  " guaranteeing a smooth user interface",
+                                  (){},isTablet ? 250 : width),
+                          const SizedBox(height: 30,),
 
+                        ],
+                      ),
                     ],
                   ),
                 ),
@@ -1071,37 +1128,22 @@ class _LandingPageState extends State<LandingPage> {
                         ),
                       ),
                       const SizedBox(height: 30),
-                      projectContainer(Images.mataverse, "Mataverse App", (){}),
-                      SizedBox(height: mainP),
-                      Text(
-                       'Project description. LIGO takes ride-hailing to the next level with advanced features designed for convenience and security.',
-                       style: GoogleFonts.onest(
-                       color: greyColor,
-                       fontWeight: FontWeight.w400,
-                       fontSize: 16
-                     ),),
-                      const SizedBox(height: 60),
-                      projectContainer(Images.sun, "Sun App", (){}),
-                      SizedBox(height: mainP),
-                      Text(
-                        'Easily search, compare prices, and book your perfect room with just a few taps. Enjoy exclusive deals, real-time availability,'
-                            ' and making every trip memorable',
-                        style: GoogleFonts.onest(
-                            color: greyColor,
-                            fontWeight: FontWeight.w400,
-                            fontSize: 16
-                        ),),
-                      const SizedBox(height: 60),
-                      projectContainer(Images.chat, "Chatting App", (){}),
-                      SizedBox(height: mainP),
-                      Text(
-                        'Google Marketplace app. Seamlessly integrated with Google Maps, our app helps users discover nearby stores, restaurants, and services.',
-                        style: GoogleFonts.onest(
-                            color: greyColor,
-                            fontWeight: FontWeight.w400,
-                            fontSize: 16
-                        ),),
-                      const SizedBox(height: 60),
+                      Wrap(
+                        // runSpacing: 10,
+                        spacing: isTablet ? 12 : 0,
+                        children: [
+                          projectContainer(Images.mataverse, "Mataverse App", (){},
+                            'Project description. LIGO takes ride-hailing to the next level with advanced features designed for convenience and security.',
+                          ),
+                          projectContainer(Images.sun, "Sun App", (){},
+                            'Easily search, compare prices, and book your perfect room with just a few taps. Enjoy exclusive deals, real-time availability,'
+                                ' and making every trip memorable',
+                          ),
+                          projectContainer(Images.chat, "Chatting App", (){},
+                            'Google Marketplace app. Seamlessly integrated with Google Maps, our app helps users discover nearby stores, restaurants, and services.',
+                          ),
+                        ],
+                      ),
                     ],
                   ),
                 ),
@@ -1109,8 +1151,10 @@ class _LandingPageState extends State<LandingPage> {
               Container(
                 key: skillKey,
                 width: width,
-                color: Colors.black.withOpacity(0.9),
+                height: isTablet ? 650 : 0,
+                color: Colors.black,
                 child: Column(
+                  mainAxisAlignment: isTablet ? MainAxisAlignment.center : MainAxisAlignment.start,
                   children: [
                     const SizedBox(height: 30),
                     Text(
@@ -1121,21 +1165,24 @@ class _LandingPageState extends State<LandingPage> {
                           color: backgroundColor),
                     ),
                     const SizedBox(height: 30),
-                    Wrap(
-                      runSpacing: 20,
-                      spacing: 20,
-                      children: [
-                        skillContainer(Images.flutter, "Flutter"),
-                        skillContainer(Images.dart, "Dart"),
-                        skillContainer(Images.firebase, "Firebase"),
-                        skillContainer(Images.sql, "MySQL"),
-                        skillContainer(Images.mongo, "MongoDB"),
-                        skillContainer(Images.java, "JavaScript"),
-                        skillContainer(Images.node, "Node.js"),
-                        skillContainer(Images.api, "Rest APIs"),
-                        skillContainer(Images.git, "Git"),
-                        skillContainer(Images.github, "GitHub"),
-                      ],
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: isTablet ? 30 : 0),
+                      child: Wrap(
+                        runSpacing: 20,
+                        spacing: 20,
+                        children: [
+                          skillContainer(Images.flutter, "Flutter"),
+                          skillContainer(Images.dart, "Dart"),
+                          skillContainer(Images.firebase, "Firebase"),
+                          skillContainer(Images.sql, "MySQL"),
+                          skillContainer(Images.mongo, "MongoDB"),
+                          skillContainer(Images.java, "JavaScript"),
+                          skillContainer(Images.node, "Node.js"),
+                          skillContainer(Images.api, "Rest APIs"),
+                          skillContainer(Images.git, "Git"),
+                          skillContainer(Images.github, "GitHub"),
+                        ],
+                      ),
                     ),
                     const SizedBox(height: 30),
                   ],
@@ -1222,7 +1269,7 @@ class _LandingPageState extends State<LandingPage> {
               Container(
                 key: contactKey,
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 12),
+                  padding: EdgeInsets.symmetric(horizontal: isTablet ? 140 : 12),
                   child: Column(
                     children: [
                       const SizedBox(height: 40,),
@@ -1313,7 +1360,7 @@ class _LandingPageState extends State<LandingPage> {
                               fontSize: 16,
                               fontWeight: FontWeight.w600,
                               text: "Send Message",
-                              width: width / 2,
+                              width:isTablet ?  width / 7 :width / 2,
                               height: 50,
                               onTap: () {},
                               textColor: backgroundColor,
