@@ -33,7 +33,7 @@ class _LandingPageState extends State<LandingPage> {
   static const String whatsappUrl = 'https://wa.me/+923197026592';
   static const String cvUrl = 'assets/images/Usama Ilyas.pdf';
   late final Function(GlobalKey) onMenuTap;
-
+  List<bool> isHoveredList = List.generate(6, (index) => false);
   final GlobalKey servicesKey = GlobalKey();
   final GlobalKey portfolioKey = GlobalKey();
   final GlobalKey aboutMeKey = GlobalKey();
@@ -58,12 +58,11 @@ class _LandingPageState extends State<LandingPage> {
     }
   }
 
-  void _onHover(bool hover) {
-    if(mounted) {
-      setState(() {
-      isHovered = hover;
+  // Function to update hover state for a specific index
+  void _onHover(bool isHovered, int index) {
+    setState(() {
+      isHoveredList[index] = isHovered;
     });
-    }
   }
 
   Future<void> _downloadAndOpenCV() async {
@@ -122,7 +121,7 @@ class _LandingPageState extends State<LandingPage> {
     );
   }
 
-  Widget serviceContainer(String image, String title, String text,VoidCallback onTap) {
+  Widget serviceContainer(String image, String title, String text,VoidCallback onTap, bool hoveredList) {
     bool isTablet = ResponsiveBreakpoints.of(context).largerThan(TABLET);
     double width = MediaQuery.of(context).size.width;
 
@@ -133,7 +132,7 @@ class _LandingPageState extends State<LandingPage> {
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(p),
             border: Border.all(color: primaryColor),
-            color: isHovered ? primaryColor : null
+            color: hoveredList ? primaryColor : null
         ),
         child: Padding(
           padding: EdgeInsets.all(mainP),
@@ -191,7 +190,6 @@ class _LandingPageState extends State<LandingPage> {
                   ],
                 ),
               ))
-
             ],
           ),
         ),
@@ -384,7 +382,10 @@ class _LandingPageState extends State<LandingPage> {
             ),
             Row(
               children: [
-                TextButton(onPressed: (){}, child: Text(
+                TextButton(onPressed: (){
+                  _scrollToSection(homeKey);
+                },
+                    child: Text(
                   'Home',
                   style: GoogleFonts.onest(
                     fontSize: 18,
@@ -392,7 +393,10 @@ class _LandingPageState extends State<LandingPage> {
                     fontWeight: FontWeight.w400,
                   ),
                 )),
-                TextButton(onPressed: (){}, child: Text(
+                TextButton(onPressed: (){
+                  _scrollToSection(aboutMeKey);
+                },
+                    child: Text(
                   'About Me',
                   style: GoogleFonts.onest(
                     fontSize: 18,
@@ -400,7 +404,10 @@ class _LandingPageState extends State<LandingPage> {
                     fontWeight: FontWeight.w400,
                   ),
                 )),
-                TextButton(onPressed: (){}, child: Text(
+                TextButton(onPressed: (){
+                  _scrollToSection(servicesKey);
+                },
+                    child: Text(
                   'Services',
                   style: GoogleFonts.onest(
                     fontSize: 18,
@@ -408,7 +415,10 @@ class _LandingPageState extends State<LandingPage> {
                     fontWeight: FontWeight.w400,
                   ),
                 )),
-                TextButton(onPressed: (){}, child: Text(
+                TextButton(onPressed: (){
+                  _scrollToSection(portfolioKey);
+                },
+                    child: Text(
                   'Portfolio',
                   style: GoogleFonts.onest(
                     fontSize: 18,
@@ -416,7 +426,10 @@ class _LandingPageState extends State<LandingPage> {
                     fontWeight: FontWeight.w400,
                   ),
                 )),
-                TextButton(onPressed: (){}, child: Text(
+                TextButton(onPressed: (){
+                  _scrollToSection(skillKey);
+                },
+                    child: Text(
                   'Skills',
                   style: GoogleFonts.onest(
                     fontSize: 18,
@@ -424,8 +437,10 @@ class _LandingPageState extends State<LandingPage> {
                     fontWeight: FontWeight.w400,
                   ),
                 )),
-                TextButton(onPressed: (){}, child: Text(
-                  'Contact',
+                TextButton(onPressed: (){
+                  _scrollToSection(contactKey);
+                },
+                    child: Text('Contact',
                   style: GoogleFonts.onest(
                     fontSize: 18,
                     color: Colors.black,
@@ -673,32 +688,37 @@ class _LandingPageState extends State<LandingPage> {
                                    children: [
                                      MouseRegion(
                                        cursor: SystemMouseCursors.click,
-                                       child: Container(
-                                         height: 50,
-                                         width: isTablet ? width / 8 : width / 3,
-                                         decoration: BoxDecoration(
-                                           borderRadius: BorderRadius.circular(100),
-                                           color: primaryColor,
-                                         ),
-                                         child: Row(
-                                           mainAxisAlignment:
-                                           MainAxisAlignment.spaceEvenly,
-                                           crossAxisAlignment: CrossAxisAlignment.center,
-                                           children: [
-                                             Text(
-                                               'Portfolio',
-                                               style: GoogleFonts.onest(
-                                                   color: backgroundColor,
-                                                   fontWeight: FontWeight.w700,
-                                                   fontSize: 14),
-                                             ),
-                                             Image.asset(
-                                               Images.arrow,
-                                               height: 10,
-                                               width: 10,
-                                               color: backgroundColor,
-                                             )
-                                           ],
+                                       child: GestureDetector(
+                                         onTap: (){
+                                           _scrollToSection(portfolioKey);
+                                         },
+                                         child: Container(
+                                           height: 50,
+                                           width: isTablet ? width / 8 : width / 3,
+                                           decoration: BoxDecoration(
+                                             borderRadius: BorderRadius.circular(100),
+                                             color: primaryColor,
+                                           ),
+                                           child: Row(
+                                             mainAxisAlignment:
+                                             MainAxisAlignment.spaceEvenly,
+                                             crossAxisAlignment: CrossAxisAlignment.center,
+                                             children: [
+                                               Text(
+                                                 'Portfolio',
+                                                 style: GoogleFonts.onest(
+                                                     color: backgroundColor,
+                                                     fontWeight: FontWeight.w700,
+                                                     fontSize: 14),
+                                               ),
+                                               Image.asset(
+                                                 Images.arrow,
+                                                 height: 10,
+                                                 width: 10,
+                                                 color: backgroundColor,
+                                               )
+                                             ],
+                                           ),
                                          ),
                                        ),
                                      ),
@@ -707,7 +727,9 @@ class _LandingPageState extends State<LandingPage> {
                                        child: ClipRRect(
                                          borderRadius: BorderRadius.circular(100),
                                          child: TextButton(
-                                           onPressed: () {},
+                                           onPressed: () {
+                                             _scrollToSection(contactKey);
+                                           },
                                            child: Center(
                                              child: Text(
                                                'Contact Me',
@@ -1018,55 +1040,93 @@ class _LandingPageState extends State<LandingPage> {
                             color: backgroundColor),
                       ),
                       SizedBox(height: isTablet ? 45 :35),
-                      MouseRegion(
-                        onEnter: (_) => _onHover(true),
-                        onExit: (_) => _onHover(false),
-                        child: serviceContainer(
-                            Images.mobile,
-                            "Mobile App development",
-                            "I specialize in building cross-platform mobile applications "
-                                "using Flutter,delivering smooth and efficient apps"
-                                " for both IOS and android with single codebase.",
-                            (){}),
-                      ),
-                      SizedBox(height: mainP),
-                      serviceContainer(
-                          Images.project,
-                          "Custom User Interface Design",
-                          "I design intuitive, user friendly interfaces tailored to meet user's specific needs,"
-                              "ensuring an engaging experience with maintaining"
-                              "brand consistency",
-                              (){}),
-                      SizedBox(height: mainP),
-                      serviceContainer(
-                          Images.apis,
-                          "API Integration (REST APIs)",
-                          "I integrate robust apis into mobile app, including Google Maps,"
-                              "Pusher and other third-party services to extend functionality and provide seamless data communication",
-                              (){}),
-                      SizedBox(height: mainP),
-                      serviceContainer(
-                          Images.firebase,
-                          "Firebase & Real-Time Database Integration",
-                          "From user authentication to real-time data syncing, I offer complete Firebase Integration to smooth,"
-                              "responsive and scalable app functionality",
-                              (){}),
-                      SizedBox(height: mainP),
-                      serviceContainer(
-                        Images.node,
-                        "Node.js Backend Development",
-                        "Specializing in efficient API development and server-side logic, "
-                            "I build robust, scalable backends with Node.js, ensuring seamless data flow and secure communication.",
-                            () {},
-                      ),
-                      SizedBox(height: mainP),
-                      serviceContainer(
-                        Images.sql,
-                        "MySQL Database Management",
-                        "Experienced in designing and managing relational databases with MySQL,"
-                            " I provide reliable data storage solutions and efficient data handling for large-scale applications.",
-                            () {},
-                      ),
+                      // MouseRegion(
+                      //   onEnter: (_) => _onHover(true),
+                      //   onExit: (_) => _onHover(false),
+                      //   child: serviceContainer(
+                      //       Images.mobile,
+                      //       "Mobile App development",
+                      //       "I specialize in building cross-platform mobile applications "
+                      //           "using Flutter,delivering smooth and efficient apps"
+                      //           " for both IOS and android with single codebase.",
+                      //       (){}),
+                      // ),
+                      // SizedBox(height: mainP),
+                      // serviceContainer(
+                      //     Images.project,
+                      //     "Custom User Interface Design",
+                      //     "I design intuitive, user friendly interfaces tailored to meet user's specific needs,"
+                      //         "ensuring an engaging experience with maintaining"
+                      //         "brand consistency",
+                      //         (){}),
+                      // SizedBox(height: mainP),
+                      // serviceContainer(
+                      //     Images.apis,
+                      //     "API Integration (REST APIs)",
+                      //     "I integrate robust apis into mobile app, including Google Maps,"
+                      //         "Pusher and other third-party services to extend functionality and provide seamless data communication",
+                      //         (){}),
+                      // SizedBox(height: mainP),
+                      // serviceContainer(
+                      //     Images.firebase,
+                      //     "Firebase & Real-Time Database Integration",
+                      //     "From user authentication to real-time data syncing, I offer complete Firebase Integration to smooth,"
+                      //         "responsive and scalable app functionality",
+                      //         (){}),
+                      // SizedBox(height: mainP),
+                      // serviceContainer(
+                      //   Images.node,
+                      //   "Node.js Backend Development",
+                      //   "Specializing in efficient API development and server-side logic, "
+                      //       "I build robust, scalable backends with Node.js, ensuring seamless data flow and secure communication.",
+                      //       () {},
+                      // ),
+                      // SizedBox(height: mainP),
+                      // serviceContainer(
+                      //   Images.sql,
+                      //   "MySQL Database Management",
+                      //   "Experienced in designing and managing relational databases with MySQL,"
+                      //       " I provide reliable data storage solutions and efficient data handling for large-scale applications.",
+                      //       () {},
+                      // ),
+                      ...List.generate(6, (index) {
+                        return Padding(
+                          padding: EdgeInsets.only(bottom: mainP),
+                          child: MouseRegion(
+                            onEnter: (_) => _onHover(true, index),
+                            onExit: (_) => _onHover(false, index),
+                            child: serviceContainer(
+                              // Different images, titles, texts for each container
+                              [
+                                Images.mobile,
+                                Images.project,
+                                Images.apis,
+                                Images.firebase,
+                                Images.node,
+                                Images.sql
+                              ][index],
+                              [
+                                "Mobile App Development",
+                                "Custom User Interface Design",
+                                "API Integration (REST APIs)",
+                                "Firebase & Real-Time Database Integration",
+                                "Node.js Backend Development",
+                                "MySQL Database Management"
+                              ][index],
+                              [
+                                "I specialize in building cross-platform mobile applications using Flutter, delivering smooth and efficient apps for both IOS and Android with a single codebase.",
+                                "I design intuitive, user-friendly interfaces tailored to meet users' specific needs, ensuring an engaging experience with brand consistency.",
+                                "I integrate robust APIs into mobile apps, including Google Maps, Pusher, and other third-party services for seamless data communication.",
+                                "From user authentication to real-time data syncing, I offer complete Firebase Integration for smooth, responsive, and scalable app functionality.",
+                                "Specializing in efficient API development and server-side logic, I build robust, scalable backends with Node.js for secure communication.",
+                                "Experienced in designing and managing relational databases with MySQL, I provide reliable data storage solutions for large-scale applications."
+                              ][index],
+                                  () {},
+                              isHoveredList[index],
+                            ),
+                          ),
+                        );
+                      }),
                     ],
                   ),
                 ),
@@ -1378,7 +1438,7 @@ class _LandingPageState extends State<LandingPage> {
                 width: width,
                 color: Colors.black.withOpacity(0.9),
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 14,vertical: 20),
+                  padding: EdgeInsets.symmetric(horizontal: isTablet ? 80 : 14,vertical: 20),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -1397,7 +1457,7 @@ class _LandingPageState extends State<LandingPage> {
                           Text(
                             "+923197026592",
                             style: GoogleFonts.onest(
-                                fontSize: 18,
+                                fontSize: 15,
                                 fontWeight: FontWeight.w700,
                                 color: Colors.grey.shade700),
                           ),
@@ -1411,13 +1471,13 @@ class _LandingPageState extends State<LandingPage> {
                           Text(
                             "devusama818@gmail.com",
                             style: GoogleFonts.onest(
-                                fontSize: 18,
+                                fontSize: 15,
                                 fontWeight: FontWeight.w700,
-                                color: Colors.grey.shade700),
+                                color: Colors.grey.shade700
+                            ),
                           ),
                         ],
                       ),
-
                     ],
                   ),
                 ),
